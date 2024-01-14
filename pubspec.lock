@@ -9,14 +9,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  background_patterns:
-    dependency: "direct main"
-    description:
-      name: background_patterns
-      sha256: e4b36ba6a8402b07f47b32232be269f79ee7aa6fa3bdba0cd55c602c2cdb0bb9
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.9"
   bitsdojo_window:
     dependency: "direct main"
     description:

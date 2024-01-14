@@ -22,15 +22,18 @@ class TopBar extends StatelessWidget{
 }
 
 class WindowButtons extends StatelessWidget {
-  final buttonColors = WindowButtonColors(
-    iconNormal: const Color(0xFF805306),
-    mouseOver: const Color(0xFFF6A00C),
-    mouseDown: const Color(0xFF805306),
-    iconMouseOver: const Color(0xFF805306),
-    iconMouseDown: const Color(0xFFFFD500));
-  final AppData appData = AppData();
+  AppData appData = AppData();
+  
+ 
   @override
   Widget build(BuildContext context){
+    final buttonColors = WindowButtonColors(
+      iconNormal: const Color(0xFF805306),
+      mouseOver: appData.antiqueBeige, //Color(0xFFF6A00C
+      mouseDown: const Color(0xFF805306),
+      iconMouseOver: const Color(0xFF805306),
+      iconMouseDown: const Color(0xFFFFD500)
+    );
     return Row(
       children: [
         MinimizeWindowButton(colors: buttonColors,),

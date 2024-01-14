@@ -1,48 +1,54 @@
+import 'dart:ui';
 
 import 'package:compass_rose/app_data.dart';
+import 'package:compass_rose/main.dart';
 import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:background_patterns/background_patterns.dart';
 
 class CenterApp extends StatelessWidget{
   final AppData appData = AppData();
   @override
   Widget build(BuildContext context){
-    return Expanded(child: Stack(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                radius: 1,
-                colors: [
-                  Color.fromARGB(255, 17, 51, 77),
-                  appData.darkSlateGray,
-                ],
-                stops: [0.1, 0.9],
-              ),
-            ),
+    return Expanded(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: CustomPaint(
+        painter: MyPainter(
+          appData.darkSlateGray,
+          shader: fragmentProgram.fragmentShader(),
           ),
-          ShaderMask(
-            shaderCallback: (Rect bounds) {
-              return createDotShader(bounds);
-            },
-            blendMode: BlendMode.srcOver,
-            child: Container(
-              color: Colors.transparent,
-            ),
-          ),
-        ],
-      ),
+      )
+        ,)
+      
     );
   }
-  
-  Shader createDotShader(Rect bounds) {
-    return RadialGradient(
-      radius: 0.1,
-      colors: [Colors.black, Colors.transparent],
-      tileMode: TileMode.mirror,
-    ).createShader(bounds);
+}
+
+class MyPainter extends CustomPainter {
+  MyPainter(this.color, {required this.shader});
+
+  final Color color;
+  final FragmentShader shader;
+  @override
+  void paint(Canvas canvas, Size size) {
+
+    
+    shader.setFloat(0, size.width);
+    shader.setFloat(1, size.height);
+    shader.setFloat(2, color.red.toDouble()/255);
+    shader.setFloat(3, color.green.toDouble()/255);
+    shader.setFloat(4, color.blue.toDouble()/255);
+    shader.setFloat(5, color.alpha.toDouble()/255);
+
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      Paint()..shader = shader,
+    );
   }
+
+  @override
+  bool shouldRepaint(MyPainter oldDelegate) =>
+    color != oldDelegate.color;
 }
 
 // Container(
